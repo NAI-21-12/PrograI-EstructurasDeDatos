@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <stdlib.h>
 
 struct país{
     struct país* sigt;
@@ -105,7 +107,13 @@ void crearListaPaíses(struct lista* países){
 
 //Función main que corre el programa
 int main(){
+    //Para el random, dejar acá arriba
+    //un número random se genera así:
+    // int numero_random = (rand() % (max - min + 1)) + min;
+    srand(time(NULL));
+    int r = srandom();
+    
     struct lista países = {NULL,NULL};
-    crearListaPaíses(&países);
+    //crearListaPaíses(&países);
     return 0;
 }
