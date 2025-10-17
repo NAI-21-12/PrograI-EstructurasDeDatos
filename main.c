@@ -5,21 +5,36 @@ struct país{
     struct país* sigt;
     char* nombre;
     char* problema1;
+    int problema1Valor;
     char* problema2;
+    int problema2Valor;
+
+    /*
+    Para ver si está activo, muerto o inactivo
+    0 = inactivo, valores de problemas en 0
+    1 = activo, valores de problemas suben
+    2 = muerto, muerto
+    */
+    int estado;
     struct país* ant;
 };
 
 struct lista{
     struct país* inicio;
+    struct país* jugador1;
+    struct país* jugador2;
     struct país* final;
 };
 
-struct país* crearPaís(char* nombre, char* problema1, char* problema2){
+struct país* crearPaís(char* nombre, char* problema1, int problema1Valor, char* problema2, int problema2Valor, int estado){
     struct país* nuevoPaís = calloc(1,sizeof(struct país));
     if (nuevoPaís != NULL){
         nuevoPaís->nombre = nombre;
         nuevoPaís->problema1 = problema1;
+        nuevoPaís->problema1Valor = problema1Valor;
         nuevoPaís->problema2 = problema2;
+        nuevoPaís->problema2Valor = problema2Valor;
+        nuevoPaís->estado = estado;
         nuevoPaís->sigt = NULL;
         nuevoPaís->ant = NULL;
     }
@@ -29,15 +44,20 @@ struct país* crearPaís(char* nombre, char* problema1, char* problema2){
 int imprimirPaíses(struct lista* lista){
     struct país* actual = lista->inicio;
     while (actual != NULL){
-        printf("País: %s, Problema 1: %s, Problema2: %s\n",actual->nombre,actual->problema1,actual->problema2);
+        if(actual -> estado == 0){
+            printf("País: %s\n",actual->nombre);
+        } else{
+            printf("País: %s, Problema 1: %s, Problema 2: %s\n",actual->nombre,actual->problema1,actual->problema2);
+            printf("                 Nivel: %d,              Nivel: %d\n",actual->problema1Valor,actual->problema2Valor);
+        }
         actual = actual->sigt;
     }
     return 0;
 }
 
 
-int insertarFinal(struct lista* lista, char* nombre, char* problema1, char* problema2){
-    struct país* nuevoPaís = crearPaís(nombre,problema1,problema2);
+int insertarFinal(struct lista* lista, char* nombre, char* problema1, int problema1Valor, char* problema2, int problema2Valor, int estado){
+    struct país* nuevoPaís = crearPaís(nombre,problema1,problema1Valor,problema2,problema2Valor,estado);
     struct país* actual = lista-> inicio;
 
     if (lista->inicio == NULL){
@@ -54,10 +74,38 @@ int insertarFinal(struct lista* lista, char* nombre, char* problema1, char* prob
 }
 
 
+void crearListaPaíses(struct lista* países){
+    //ESTOS SON PROBLEMAS DE EJEMPLO, LA IDEA ES CAMBIARLOS DESPUÉS
+    insertarFinal(países,"México","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Cuba","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Guatemala","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Belice","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Jamaica","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Haití","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"República Dominicana","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Puerto Rico","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"El Salvador","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Honduras","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Nicaragua","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Costa Rica","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Panamá","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Colombia","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Venezuela","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Guyanas","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Ecuador","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Perú","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Brasil","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Bolivia","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Paraguay","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Uruguay","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Chile","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"Argentina","Corrupción",0,"Muerte",0,0);
+    imprimirPaíses(países);
+}
+
 //Función main que corre el programa
 int main(){
     struct lista países = {NULL,NULL};
-    insertarFinal(&países,"Costa Rica","Corrupción","Muerte");
-    imprimirPaíses(&países);
+    crearListaPaíses(&países);
     return 0;
 }
