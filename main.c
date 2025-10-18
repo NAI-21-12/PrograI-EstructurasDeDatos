@@ -51,7 +51,9 @@ int imprimirPaíses(struct lista* lista){
         if(actual -> estado == 0){
             printf("País: %s\n",actual->nombre);
             printf("\n");
-        } else{
+        } else if(actual->estado == 2){
+            printf("País: %s         Eliminado\n",actual->nombre);
+        }else {
             printf("País: %s, Problema 1: %s, Problema 2: %s\n",actual->nombre,actual->problema1,actual->problema2);
             printf("                 Nivel: %d,              Nivel: %d\n",actual->problema1Valor,actual->problema2Valor);
             printf("\n");
@@ -164,87 +166,99 @@ void activarIniciales(struct lista* países){
 
 void aumentarProblemas(struct lista* países){
     //esto aumenta los problemas en un país aleatorio
-    int paísSalado = (rand() % (23 - 0 + 1)) + 0;
-    struct país* actual = países->inicio;
-    int índice = 0;
-    //si es 1, sube problema1, si es 2, sube problema2
-    int valorASubir = (rand() % (2 - 1 + 1)) + 1;
-    while(índice < 23){
-        if(índice == paísSalado){
-            /*AAAAAAAAA SON demasiados ifs pero es que sino está complejo hacer
-            los distintos casos, es así:
-            Si un valor es 3, no sube a 4 sino que suben los de la par
-            Si un país ambos valores son 3, se muere, hay que hacer función aparte
+    int aumentado = 0;
+    //Este while es para que sí o sí aumente un valor en alguno
+    while(aumentado == 0){
+        int paísSalado = (rand() % (23 - 0 + 1)) + 0;
+        struct país* actual = países->inicio;
+        int índice = 0;
+        //si es 1, sube problema1, si es 2, sube problema2
+        int valorASubir = (rand() % (2 - 1 + 1)) + 1;
+        while(índice < 23){
+            if(índice == paísSalado && actual->estado == 1){
 
-            También hay que considerar el caso de que sea 3 entonces suben los
-            de la par, pero si es el primero o último es distinto, solo subiría
-            el de abajo o arriba respectivamente
-            A su vez, esto causaría que si los de la par son 3, se pueda hacer como
-            un bucle infinito, voy a hacer que si el de la par es 3, ahí quedó, no sube
+                //Para problema1
+                if( valorASubir == 1){
+                    //Si no es 3
+                    if(actual->problema1Valor < 3){
+                        actual->problema1Valor++;
+                        aumentado++;
+                    }
 
-            A su vez, hay que revisar tanto si es problema 1 y 2,
-            no sé si haya forma más efectiva de hacerlo
-
-            A ver...
-            */
-
-            //Para problema1
-            if( valorASubir == 1){
-                //Si no es 3
-                if(actual->problema1Valor < 3){
-                    actual->problema1Valor++;
-                }
-
-                //ahora sí, problemas.
-                //si es 3
-                if(actual->problema1Valor == 3){
-                    if(índice == 0 && actual->sigt->problema1Valor != 3){
-                        actual->sigt->problema1Valor++;
-                    } else if(índice == 23 && actual->ant->problema1Valor != 3){
-                        actual->ant->problema1Valor++;
-                    } else{
-                        if(actual->sigt->problema1Valor != 3){
+                    //ahora sí, problemas.
+                    //si es 3
+                    if(actual->problema1Valor == 3){
+                        if(índice == 0 && actual->sigt->problema1Valor != 3){
                             actual->sigt->problema1Valor++;
-                        }
-                        if(actual->ant->problema1Valor != 3){
+                            aumentado++;
+                        } else if(índice == 23 && actual->ant->problema1Valor != 3){
                             actual->ant->problema1Valor++;
+                            aumentado++;
+                        } else{
+                            if(actual->sigt->problema1Valor != 3){
+                                actual->sigt->problema1Valor++;
+                                aumentado++;
+                            }
+                            if(actual->ant->problema1Valor != 3){
+                                actual->ant->problema1Valor++;
+                                aumentado++;
+                            }
                         }
                     }
+
                 }
 
-            }
+                //Ahora para problema2
+                if( valorASubir == 2){
+                    //Si no es 3
+                    if(actual->problema2Valor < 3){
+                        actual->problema2Valor++;
+                        aumentado++;
+                    }
 
-            //Ahora para problema2
-            if( valorASubir == 2){
-                //Si no es 3
-                if(actual->problema2Valor < 3){
-                    actual->problema2Valor++;
-                }
-
-                //ahora sí, problemas.
-                //si es 3
-                if(actual->problema2Valor == 3){
-                    if(índice == 0 && actual->sigt->problema2Valor != 3){
-                        actual->sigt->problema2Valor++;
-                    } else if(índice == 23 && actual->ant->problema2Valor != 3){
-                        actual->ant->problema2Valor++;
-                    } else{
-                        if(actual->sigt->problema2Valor != 3){
+                    //ahora sí, problemas.
+                    //si es 3
+                    if(actual->problema2Valor == 3){
+                        if(índice == 0 && actual->sigt->problema2Valor != 3){
                             actual->sigt->problema2Valor++;
-                        }
-                        if(actual->ant->problema2Valor != 3){
+                            aumentado++;
+                        } else if(índice == 23 && actual->ant->problema2Valor != 3){
                             actual->ant->problema2Valor++;
+                            aumentado++;
+                        } else{
+                            if(actual->sigt->problema2Valor != 3){
+                                actual->sigt->problema2Valor++;
+                                aumentado++;
+                            }
+                            if(actual->ant->problema2Valor != 3){
+                                actual->ant->problema2Valor++;
+                                aumentado++;
+                            }
                         }
                     }
+
                 }
 
             }
-
-
-
+        índice++;
+        actual = actual->sigt;
         }
-    índice++;
-    actual = actual->sigt;
+    }
+}
+
+
+void paísEliminado(struct lista* países){
+    //Pone un país en eliminado
+    //Para esto, mejor no borrarlo de la lista para evitar enredos
+    //Con otras funciones
+
+    struct país* actual = países->inicio;
+
+    while(actual->sigt != NULL){
+        if(actual->problema1Valor == 3 && actual->problema2Valor == 3){
+            actual->estado = 2;
+        }
+        actual = actual->sigt;
     }
 }
 
@@ -258,7 +272,6 @@ int main(){
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
     activarIniciales(&países);
-    //imprimirPaíses(&países);
-    aumentarProblemas(&países);
+    imprimirPaíses(&países);
     return 0;
 }
