@@ -111,7 +111,7 @@ int main(){
     //un número random se genera así:
     // int numero_random = (rand() % (max - min + 1)) + min;
     srand(time(NULL));
-    int r = srandom();
+    
     
     struct lista países = {NULL,NULL};
     //crearListaPaíses(&países);
