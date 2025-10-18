@@ -311,6 +311,12 @@ int main(){
     //Para el random, dejar acá arriba
     //un número random se genera así:
     // int numero_random = (rand() % (max - min + 1)) + min;
+
+    /*
+    Orden: crearLista, activarIniciales, imprimir,
+    turnoJugador1, aumentarProblemas, paísEliminado, turnoJugador2 (después de ciertos
+    turnos, activarNuevo)
+    */
     srand(time(NULL));
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
