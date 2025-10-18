@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct país{
     struct país* sigt;
@@ -48,9 +49,11 @@ int imprimirPaíses(struct lista* lista){
     while (actual != NULL){
         if(actual -> estado == 0){
             printf("País: %s\n",actual->nombre);
+            printf("\n");
         } else{
             printf("País: %s, Problema 1: %s, Problema 2: %s\n",actual->nombre,actual->problema1,actual->problema2);
             printf("                 Nivel: %d,              Nivel: %d\n",actual->problema1Valor,actual->problema2Valor);
+            printf("\n");
         }
         actual = actual->sigt;
     }
@@ -102,8 +105,43 @@ void crearListaPaíses(struct lista* países){
     insertarFinal(países,"Uruguay","Corrupción",0,"Muerte",0,0);
     insertarFinal(países,"Chile","Corrupción",0,"Muerte",0,0);
     insertarFinal(países,"Argentina","Corrupción",0,"Muerte",0,0);
-    imprimirPaíses(países);
 }
+
+
+
+
+
+void activarIniciales(struct lista* países){
+    //Genera los países que van a estar activos inicialmente
+    //25 para que el índice concida, son 24 países, se ignora el 0
+    bool escogidos[25] = {false};
+
+    int generados = 0;
+    int númeroActual;
+    struct país* actual = países->inicio;
+
+    while(generados < 9){
+        //24 porque son 24 países, es el rango máximo
+        númeroActual = (rand()%24)+1;
+
+        if(escogidos[númeroActual] == false){
+            generados++;
+            escogidos[númeroActual] = true;
+        }
+    
+    }
+        int índice = 1;
+    //Para activar los países random
+    while(actual != NULL){
+        if(escogidos[índice] == true){
+            actual->estado = 1;
+        }
+        índice++;
+        actual = actual->sigt;
+    }
+
+}
+
 
 //Función main que corre el programa
 int main(){
@@ -111,9 +149,11 @@ int main(){
     //un número random se genera así:
     // int numero_random = (rand() % (max - min + 1)) + min;
     srand(time(NULL));
-    
-    
+    #define NÚMERO_PAÍSES 24
     struct lista países = {NULL,NULL};
-    //crearListaPaíses(&países);
+    crearListaPaíses(&países);
+    activarIniciales(&países);
+    imprimirPaíses(&países);
+
     return 0;
 }
