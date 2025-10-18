@@ -167,14 +167,84 @@ void aumentarProblemas(struct lista* países){
     int paísSalado = (rand() % (23 - 0 + 1)) + 0;
     struct país* actual = países->inicio;
     int índice = 0;
+    //si es 1, sube problema1, si es 2, sube problema2
+    int valorASubir = (rand() % (2 - 1 + 1)) + 1;
     while(índice < 23){
         if(índice == paísSalado){
-            //Acá va la condición especial, casos:
-            //si un valor es 3 y cae en ese, aumentan los vecinos
-            //si ambos valores de un país llegan a 3, se muere
-            //sino, solo sube 1 en un valor random creo??
+            /*AAAAAAAAA SON demasiados ifs pero es que sino está complejo hacer
+            los distintos casos, es así:
+            Si un valor es 3, no sube a 4 sino que suben los de la par
+            Si un país ambos valores son 3, se muere, hay que hacer función aparte
+
+            También hay que considerar el caso de que sea 3 entonces suben los
+            de la par, pero si es el primero o último es distinto, solo subiría
+            el de abajo o arriba respectivamente
+            A su vez, esto causaría que si los de la par son 3, se pueda hacer como
+            un bucle infinito, voy a hacer que si el de la par es 3, ahí quedó, no sube
+
+            A su vez, hay que revisar tanto si es problema 1 y 2,
+            no sé si haya forma más efectiva de hacerlo
+
+            A ver...
+            */
+
+            //Para problema1
+            if( valorASubir == 1){
+                //Si no es 3
+                if(actual->problema1Valor < 3){
+                    actual->problema1Valor++;
+                }
+
+                //ahora sí, problemas.
+                //si es 3
+                if(actual->problema1Valor == 3){
+                    if(índice == 0 && actual->sigt->problema1Valor != 3){
+                        actual->sigt->problema1Valor++;
+                    } else if(índice == 23 && actual->ant->problema1Valor != 3){
+                        actual->ant->problema1Valor++;
+                    } else{
+                        if(actual->sigt->problema1Valor != 3){
+                            actual->sigt->problema1Valor++;
+                        }
+                        if(actual->ant->problema1Valor != 3){
+                            actual->ant->problema1Valor++;
+                        }
+                    }
+                }
+
+            }
+
+            //Ahora para problema2
+            if( valorASubir == 2){
+                //Si no es 3
+                if(actual->problema2Valor < 3){
+                    actual->problema2Valor++;
+                }
+
+                //ahora sí, problemas.
+                //si es 3
+                if(actual->problema2Valor == 3){
+                    if(índice == 0 && actual->sigt->problema2Valor != 3){
+                        actual->sigt->problema2Valor++;
+                    } else if(índice == 23 && actual->ant->problema2Valor != 3){
+                        actual->ant->problema2Valor++;
+                    } else{
+                        if(actual->sigt->problema2Valor != 3){
+                            actual->sigt->problema2Valor++;
+                        }
+                        if(actual->ant->problema2Valor != 3){
+                            actual->ant->problema2Valor++;
+                        }
+                    }
+                }
+
+            }
+
+
+
         }
     índice++;
+    actual = actual->sigt;
     }
 }
 
@@ -188,7 +258,7 @@ int main(){
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
     activarIniciales(&países);
-    imprimirPaíses(&países);
+    //imprimirPaíses(&países);
     aumentarProblemas(&países);
     return 0;
 }
