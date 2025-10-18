@@ -30,6 +30,7 @@ struct lista{
 };
 
 struct país* crearPaís(char* nombre, char* problema1, int problema1Valor, char* problema2, int problema2Valor, int estado){
+    
     struct país* nuevoPaís = calloc(1,sizeof(struct país));
     if (nuevoPaís != NULL){
         nuevoPaís->nombre = nombre;
@@ -161,9 +162,20 @@ void activarIniciales(struct lista* países){
 
 }
 
-
-void valoresIniciales(struct lista* países){
-
+void aumentarProblemas(struct lista* países){
+    //esto aumenta los problemas en un país aleatorio
+    int paísSalado = (rand() % (23 - 0 + 1)) + 0;
+    struct país* actual = países->inicio;
+    int índice = 0;
+    while(índice < 23){
+        if(índice == paísSalado){
+            //Acá va la condición especial, casos:
+            //si un valor es 3 y cae en ese, aumentan los vecinos
+            //si ambos valores de un país llegan a 3, se muere
+            //sino, solo sube 1 en un valor random creo??
+        }
+    índice++;
+    }
 }
 
 
@@ -173,11 +185,10 @@ int main(){
     //un número random se genera así:
     // int numero_random = (rand() % (max - min + 1)) + min;
     srand(time(NULL));
-    #define NÚMERO_PAÍSES 24
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
     activarIniciales(&países);
     imprimirPaíses(&países);
-
+    aumentarProblemas(&países);
     return 0;
 }
