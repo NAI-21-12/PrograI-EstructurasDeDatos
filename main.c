@@ -130,15 +130,39 @@ void activarIniciales(struct lista* países){
         }
     
     }
-        int índice = 1;
+
     //Para activar los países random
+    int índice = 1;
+    int cuenta = 8;
     while(actual != NULL){
+
         if(escogidos[índice] == true){
             actual->estado = 1;
+        if(cuenta > 5){
+            actual->problema1Valor = 3;
+            actual->problema2Valor = 2;
+            cuenta--;
+        }else if(cuenta > 2){
+            actual->problema1Valor = 2;
+            actual->problema2Valor = 1;
+            cuenta--;
+        }else{
+            actual->problema1Valor = 1;
+            actual->problema2Valor = 1;
+            cuenta--;
+        }
+        
         }
         índice++;
+
+
         actual = actual->sigt;
-    }
+    }    
+
+}
+
+
+void valoresIniciales(struct lista* países){
 
 }
 
