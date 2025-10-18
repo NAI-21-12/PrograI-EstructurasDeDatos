@@ -247,6 +247,49 @@ void aumentarProblemas(struct lista* países){
 }
 
 
+
+int activarNuevo(struct lista* países){
+    //activa un país que no lo estaba
+    int activado = 0;
+    //Si se repite 20 veces y no se activa ninguno, queda así
+    //Para eso este valor
+    int contador = 0;
+    //Este while es para que sí o sí aumente un valor en alguno
+    while(activado == 0){
+        int paísSalado = (rand() % (23 - 0 + 1)) + 0;
+        struct país* actual = países->inicio;
+        int índice = 0;
+        //si es 1, sube problema1, si es 2, sube problema2
+        int valorASubir = (rand() % (2 - 1 + 1)) + 1;
+        while(índice < 23){
+            if(índice == paísSalado && actual->estado == 0){
+
+                //Para problema1
+                if( valorASubir == 1){
+                    actual->estado = 1;
+                    actual->problema1Valor++;
+                    activado++;
+                    return 0;
+                }
+
+                //Ahora para problema2
+                if( valorASubir == 2){
+                    actual->estado = 0;
+                    actual->problema2Valor++;
+                    activado++;
+                    return 0;
+            }
+        }
+        índice++;
+        actual = actual->sigt;
+        contador++;
+    }
+    if(contador == 20){
+        return 0;
+    }
+    }
+}
+
 void paísEliminado(struct lista* países){
     //Pone un país en eliminado
     //Para esto, mejor no borrarlo de la lista para evitar enredos
