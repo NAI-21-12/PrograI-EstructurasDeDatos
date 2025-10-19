@@ -507,7 +507,7 @@ int ayudarPaís(struct lista* países, int numJugador){
 	}
 
     //Caso 1: país muerto o inactivo
-    if(actual->estado == 1 || actual->estado == 0){
+    if(actual->estado == 2 || actual->estado == 0){
         printf("\033[31mPaís no válido\033[0m\n");
         return 1;
     }
@@ -572,6 +572,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		} else if(decisión == 2 && numJugador == 1){
 			actual->sigt->jugador1 = 1;
 			actual->jugador1 = 0;
+            actual = actual->sigt;
 		
 		} else	if(decisión == 1 && numJugador == 2){
 			printf("México no tiene vecinos norte, perdiste tu tiempo y un turno\n");
@@ -579,10 +580,18 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		} else if(decisión == 2 && numJugador == 2){
 			actual->sigt->jugador2 = 1;
 			actual->jugador2 = 0;
+            actual = actual->sigt;
 	
-		} else if(decisión == 3){
-            //Si da error la función esta, se repite
-            if(ayudarPaís(países,numJugador) == 1){
+		} else if(decisión == 3 && numJugador == 1){
+			//Si da error la función esta, se repite
+            resultadoAyuda = ayudarPaís(países,1);
+            if(resultadoAyuda == 1){
+                turnoJugador(numJugador,jugador,países,acciones);
+            }
+        } else if(decisión == 3&& numJugador == 2){
+			//Si da error la función esta, se repite
+            resultadoAyuda = ayudarPaís(países,2);
+            if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
             }
 				
@@ -594,6 +603,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		if(decisión == 1 && numJugador == 1){
 			actual->ant->jugador1 = 1;
 			actual->jugador1 = 0;
+            actual = actual->ant;
 		
 		} else if(decisión == 2 && numJugador == 1){
 			printf("Argentina no tiene vecinos sur, perdiste tu tiempo y un turno\n");
@@ -601,15 +611,23 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		} else if(decisión == 1 && numJugador == 2){
 			actual->ant->jugador2 = 1;
 			actual->jugador2 = 0;
+            actual = actual->ant;
 		
 		} else if(decisión == 2 && numJugador == 2){
 			printf("Argentina no tiene vecinos sur, perdiste tu tiempo y un turno\n");
 		
-		} else if(decisión == 3){
+		} else if(decisión == 3&& numJugador == 1){
 			//Si da error la función esta, se repite
-            if(ayudarPaís(países,numJugador) == 1){
+            resultadoAyuda = ayudarPaís(países,1);
+            if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
-            }	
+            }
+        } else if(decisión == 3&& numJugador == 2){
+			//Si da error la función esta, se repite
+            resultadoAyuda = ayudarPaís(países,2);
+            if(resultadoAyuda == 1){
+                turnoJugador(numJugador,jugador,países,acciones);
+            }
 		} else{
 			printf("Esa opción no es válida, perdiste tu turno\n");
 		}
@@ -618,22 +636,33 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		if(decisión == 1 && numJugador == 1){
 			actual->ant->jugador1 = 1;
 			actual->jugador1 = 0;
+            actual = actual->ant;
 		
 		} else if(decisión == 2 && numJugador == 1){
 			actual->sigt->jugador1 = 1;
 			actual->jugador1 = 0;
+            actual = actual->sigt;
 		
 		} else if(decisión == 1 && numJugador == 2){
 			actual->ant->jugador2 = 1;
 			actual->jugador2 = 0;
+            actual = actual->ant;
 		
 		} else if(decisión == 2 && numJugador == 2){
 			actual->sigt->jugador2 = 1;
 			actual->jugador2 = 0;
+            actual = actual->sigt;
 		
-		} else if(decisión == 3){
+		} else if(decisión == 3 && numJugador == 1){
 			//Si da error la función esta, se repite
-            if(ayudarPaís(países,numJugador) == 1){
+            resultadoAyuda = ayudarPaís(países,1);
+            if(resultadoAyuda == 1){
+                turnoJugador(numJugador,jugador,países,acciones);
+            }
+        } else if(decisión == 3 && numJugador == 2){
+			//Si da error la función esta, se repite
+            resultadoAyuda = ayudarPaís(países,2);
+            if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
             }
 				
