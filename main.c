@@ -3,15 +3,19 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 
 struct país{
     struct país* sigt;
+    struct país* ant;
     char* nombre;
     char* problema1;
     int problema1Valor;
     char* problema2;
     int problema2Valor;
+    int jugador1;
+    int jugador2;
 
     /*
     Para ver si está activo, muerto o inactivo
@@ -20,41 +24,52 @@ struct país{
     2 = muerto, muerto
     */
     int estado;
-    struct país* ant;
 };
 
 struct lista{
     struct país* inicio;
-    struct país* jugador1;
-    struct país* jugador2;
     struct país* final;
 };
 
 
-char* crearJugador(){
-	char* nuevoJugador = calloc(11, sizeof(char));
-	char decisión;
-	char basura;
+char* crearJugador(int número){
+	int tamaño = 10;
+	char* nuevoJugador = calloc(tamaño + 1, sizeof(char));
+	char decisión  = '\0';
 	
-	printf("¡Bienvenido nuevo jugador!\n%s",
-	       "¿Cuál es tu nombre? (Máximo 10 letras sin espacios)\n");
-	scanf(" %s", nuevoJugador);
-	nuevoJugador[10] = '\0';
+	if(número != 1){
+		printf("\n");
+	}
 	
+	printf("¡Bienvenido jugador %d!\n%s%d%s", número,
+	       "¿Cuál es tu nombre? (Máximo ", tamaño, " letras sin espacios)\n");
+	
+	while(scanf("%[^\n]%*c", nuevoJugador) == 0){
+		getchar();
+	}
+
+	nuevoJugador[tamaño] = '\0';
 	printf("\nUn placer en conocerte %s\n", nuevoJugador);
-	printf("¿Te informo de la situación actual (y/n)? (Leer las reglas)\n");
-	scanf(" %c", &decisión);
+	
+	printf("%s\n", "¿Te informo de la situación actual (y/n)? (Leer las reglas)");
+	scanf("%[^\n]%*c", &decisión);
 	if(decisión == 'y' || decisión == 'Y'){
-		printf("\n¡AQUÍ VA UNA INTRODUCCIÓN AL JUEGO PORQUE ES AURELIO!\n");
-		scanf(" %c", &basura);
+		printf("%s\n", "\n¡AQUÍ VA UNA INTRODUCCIÓN AL JUEGO PORQUE ES AURELIO!");
+		
+		printf("\nPresione ENTER para continuar");
+		while(getchar() != '\n'){}
 		
 	} else if(decisión == 'n' || decisión == 'N'){
 		printf("\nCool, buena suerte salvando el mundo!\n");
-		scanf(" %c", &basura);
+		
+		printf("\nPresione ENTER para continuar");
+		while(getchar() != '\n'){}
 		
 	} else{
 		printf("\nGenial, me salió inteligente. No tengo que explicar nada.\n");
-		scanf(" %c", &basura);
+		
+		printf("\nPresione ENTER para continuar");
+		while(getchar() != '\n'){}
 
 	}
 	return nuevoJugador;
@@ -63,7 +78,8 @@ char* crearJugador(){
 
 struct país* crearPaís(char* nombre, char* problema1,
                        int problema1Valor, char* problema2,
-                       int problema2Valor, int estado){
+                       int problema2Valor, int estado,
+                       int jugador1, int jugador2){
 
     struct país* nuevoPaís = calloc(1,sizeof(struct país));
     if (nuevoPaís != NULL){
@@ -75,6 +91,8 @@ struct país* crearPaís(char* nombre, char* problema1,
         nuevoPaís->estado = estado;
         nuevoPaís->sigt = NULL;
         nuevoPaís->ant = NULL;
+        nuevoPaís->jugador1 = jugador1;
+        nuevoPaís->jugador2 = jugador2;
     }
     return nuevoPaís;
 };
@@ -86,17 +104,37 @@ struct país* crearPaís(char* nombre, char* problema1,
  * S: Los países impresos en pantalla
  * R: Lista debe ser diferente de null
  */ 
-int imprimirPaíses(struct lista* lista){
+int imprimirPaíses(struct lista* lista, char* jugador1, char* jugador2){
     struct país* actual = lista->inicio;
    
     while (actual->sigt != NULL){
         if(actual -> estado == 0){
             printf("País: %s\t\t\tTodo bien\n",actual->nombre);
+            
+            if(actual->jugador1 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador1);
+				
+			} 
+			if(actual->jugador2 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador2);
+				
+			}
+			
             printf("\n---------------Frontera: %s/%s----------------\n\n",
                    actual->nombre, actual->sigt->nombre);
             
         } else if(actual->estado == 2){
             printf("País: %s\t\t\tEliminado\n",actual->nombre);
+                        
+            if(actual->jugador1 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador1);
+				
+			}
+			if(actual->jugador2 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador2);
+				
+			}
+			
             printf("\n---------------Frontera: %s/%s----------------\n\n",
                    actual->nombre, actual->sigt->nombre);
             
@@ -107,7 +145,16 @@ int imprimirPaíses(struct lista* lista){
                    
             printf("Problema 2: %s\t\tNivel: %d\n",
                    actual->problema2, actual->problema2Valor);
-                   
+                        
+            if(actual->jugador1 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador1);
+				
+			}
+			if(actual->jugador2 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador2);
+				
+			}
+			
             printf("\n---------------Frontera: %s/%s----------------\n\n",
                    actual->nombre, actual->sigt->nombre);
                    
@@ -118,9 +165,33 @@ int imprimirPaíses(struct lista* lista){
     //Caso final
     if(actual -> estado == 0){
         printf("País: %s\t\tTodo bien\n",actual->nombre);
+        
+        if(actual->jugador1 == 1){
+			printf("\033[32m%s está aquí\033[0m\n", jugador1);
+				
+		} 
+		if(actual->jugador2 == 1){
+			printf("\033[32m%s está aquí\033[0m\n", jugador2);
+				
+		}
+        
+        printf("\n---------------Frontera: %s----------------\n\n",
+               actual->nombre);
             
     } else if(actual->estado == 2){
         printf("País: %s\t\tEliminado\n",actual->nombre);
+        
+        if(actual->jugador1 == 1){
+			printf("\033[32m%s está aquí\033[0m\n", jugador1);
+				
+		} 
+		if(actual->jugador2 == 1){
+			printf("\033[32m%s está aquí\033[0m\n", jugador2);
+				
+		}
+		
+        printf("\n---------------Frontera: %s----------------\n\n",
+               actual->nombre);
 
             
     }else {
@@ -130,6 +201,17 @@ int imprimirPaíses(struct lista* lista){
                    
             printf("Problema 2: %s\t\tNivel: %d\n",
                    actual->problema2, actual->problema2Valor);
+                   
+            if(actual->jugador1 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador1);
+				
+			} 
+			if(actual->jugador2 == 1){
+				printf("\033[32m%s está aquí\033[0m\n", jugador2);
+				
+			}
+            printf("\n---------------Frontera: %s----------------\n\n",
+               actual->nombre);
         }
     return 0;
 }
@@ -137,9 +219,10 @@ int imprimirPaíses(struct lista* lista){
 
 int insertarFinal(struct lista* lista, char* nombre, char* problema1,
                   int problema1Valor, char* problema2,
-                  int problema2Valor, int estado){
+                  int problema2Valor, int estado,
+                  int jugador1, int jugador2){
 
-    struct país* nuevoPaís = crearPaís(nombre,problema1,problema1Valor,problema2,problema2Valor,estado);
+    struct país* nuevoPaís = crearPaís(nombre,problema1,problema1Valor,problema2,problema2Valor,estado,jugador1,jugador2);
     struct país* actual = lista-> inicio;
 
     if (lista->inicio == NULL){
@@ -158,30 +241,30 @@ int insertarFinal(struct lista* lista, char* nombre, char* problema1,
 
 void crearListaPaíses(struct lista* países){
     //ESTOS SON PROBLEMAS DE EJEMPLO, LA IDEA ES CAMBIARLOS DESPUÉS
-    insertarFinal(países,"México","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Cuba","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Guatemala","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Belice","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Jamaica","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Haití","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"República Dominicana","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Puerto Rico","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"El Salvador","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Honduras","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Nicaragua","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Costa Rica","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Panamá","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Colombia","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Venezuela","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Guyanas","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Ecuador","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Perú","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Brasil","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Bolivia","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Paraguay","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Uruguay","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Chile","Corrupción",0,"Muerte",0,0);
-    insertarFinal(países,"Argentina","Corrupción",0,"Muerte",0,0);
+    insertarFinal(países,"México","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Cuba","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Guatemala","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Belice","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Jamaica","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Haití","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"República Dominicana","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Puerto Rico","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"El Salvador","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Honduras","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Nicaragua","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Costa Rica","Corrupción",0,"Muerte",0,0,1,1);
+    insertarFinal(países,"Panamá","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Colombia","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Venezuela","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Guyanas","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Ecuador","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Perú","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Brasil","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Bolivia","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Paraguay","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Uruguay","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Chile","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"Argentina","Corrupción",0,"Muerte",0,0,0,0);
 }
 
 
@@ -390,23 +473,113 @@ void paísEliminado(struct lista* países){
     while(actual->sigt != NULL){
         if(actual->problema1Valor == 3 && actual->problema2Valor == 3){
 			printf("El país %s ha sido eliminado.\n", actual -> nombre);
-            actual->estado = 2;
+			while(getchar() != '\n'){}
+            actual -> estado = 2;
+            actual -> problema1Valor = -1;
+            actual -> problema2Valor = -1;
+            
         }
         actual = actual->sigt;
     }
 }
 
 
-int turnoJugador(char* jugador, struct lista* países, int acciones){
-	//printf("\nNo está listo.\n");
-	//char basura;
-	//scanf(" %c", &basura);
+int turnoJugador(int numJugador, char* jugador, struct lista* países, int acciones){
+	struct país* actual = países->inicio;
+	int decisión;
+	
+	if(numJugador == 1){
+		while(actual->jugador1 != 1){
+			actual = actual->sigt;
+		}
+
+	} else if(numJugador == 2){
+		while(actual->jugador2 != 1){
+			actual = actual->sigt;
+		}
+	}
+
+	printf("%s ¿Qué deseas realizar ahora? (Te quedan %d acciones)\n%s%s%s",
+	       jugador, acciones, "1. Moverse al país vecino norte\n",
+	       "2. Moverse al país vecino sur\n", "3. Implementar un proyecto aquí\n");
+
+	scanf("%d", &decisión);
+	
+	if (actual->nombre == "México"){
+		if(decisión == 1 && numJugador == 1){
+			printf("México no tiene vecinos norte, perdiste tu tiempo y un turno\n");
+		
+		} else if(decisión == 2 && numJugador == 1){
+			actual->sigt->jugador1 = 1;
+			actual->jugador1 = 0;
+		
+		} else	if(decisión == 1 && numJugador == 2){
+			printf("México no tiene vecinos norte, perdiste tu tiempo y un turno\n");
+		
+		} else if(decisión == 2 && numJugador == 2){
+			actual->sigt->jugador2 = 1;
+			actual->jugador2 = 0;
+	
+		} else if(decisión == 3){
+			printf("\033[31mProyectos aún no implementados.\033[0m\n");
+				
+		} else{
+			printf("Esa opción no es válida, perdiste tu turno\n");
+		}
+			
+	} else if (actual->nombre == "Argentina"){
+		if(decisión == 1 && numJugador == 1){
+			actual->ant->jugador1 = 1;
+			actual->jugador1 = 0;
+		
+		} else if(decisión == 2 && numJugador == 1){
+			printf("Argentina no tiene vecinos sur, perdiste tu tiempo y un turno\n");
+		
+		} else if(decisión == 1 && numJugador == 2){
+			actual->ant->jugador2 = 1;
+			actual->jugador2 = 0;
+		
+		} else if(decisión == 2 && numJugador == 2){
+			printf("Argentina no tiene vecinos sur, perdiste tu tiempo y un turno\n");
+		
+		} else if(decisión == 3){
+			printf("\033[31mProyectos aún no implementados.\033[0m\n");
+				
+		} else{
+			printf("Esa opción no es válida, perdiste tu turno\n");
+		}
+			
+	} else{
+		if(decisión == 1 && numJugador == 1){
+			actual->ant->jugador1 = 1;
+			actual->jugador1 = 0;
+		
+		} else if(decisión == 2 && numJugador == 1){
+			actual->sigt->jugador1 = 1;
+			actual->jugador1 = 0;
+		
+		} else if(decisión == 1 && numJugador == 2){
+			actual->ant->jugador2 = 1;
+			actual->jugador2 = 0;
+		
+		} else if(decisión == 2 && numJugador == 2){
+			actual->sigt->jugador2 = 1;
+			actual->jugador2 = 0;
+		
+		} else if(decisión == 3){
+			printf("\033[31mProyectos aún no implementados.\033[0m\n");
+				
+		} else{
+			printf("Esa opción no es válida, perdiste tu turno\n");
+		}
+	}
+		
 
 	if(acciones == 1){
 		return 0;
 		
 	} else{
-		return turnoJugador(jugador, países, acciones - 1);
+		return turnoJugador(numJugador, jugador, países, acciones - 1);
 
 	}
 }
@@ -448,14 +621,14 @@ int contarProblemas1(struct lista* países){
 	struct país* actual = países->inicio;
 	
 	while(actual -> sigt != NULL){
-		if(actual -> problema1Valor != 0){
+		if(actual -> problema1Valor > 0){
 			problemas += actual -> problema1Valor;
 		}
 		actual = actual->sigt;
 	}
 	
 	//Caso final
-	if(actual -> problema1Valor != 0){
+	if(actual -> problema1Valor > 0){
 		problemas += actual -> problema1Valor;
 	}
 	return problemas;
@@ -502,29 +675,34 @@ int main(){
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
     activarIniciales(&países);
-    char* jugador1 = crearJugador();
-    char* jugador2 = crearJugador();
-    int ronda = 1;
+    //char* jugador1 = crearJugador(1);
+    //char* jugador2 = crearJugador(2);
+    //Para pruebas sin introducción comentar esas 2 líneas y descomentar estas
+    char* jugador1 = "Jugador1";
+    char* jugador2 = "Jugador2";
     
+    int ronda = 1;
+    printf("\n");
     while(contarVivos(&países) > 3 && contarProblemas1(&países) != 0
           && contarProblemas2(&países) != 0){
 
-		printf("Ronda: %d\n%s\n", ronda,
+		printf("\033[31mRonda: %d\033[0m\n%s\n", ronda,
 		       "--------------------------------------------------");
-		imprimirPaíses(&países);
-		turnoJugador(jugador1, &países, 4);
-		turnoJugador(jugador2, &países, 4);
+		imprimirPaíses(&países, jugador1, jugador2);
+		while(getchar() != '\n'){}
+		turnoJugador(1, jugador1, &países, 4);
+		turnoJugador(2, jugador2, &países, 4);
 		aumentarProblemas(&países);
 		paísEliminado(&países);
 		ronda++;
 	}
 	
 	if(contarVivos(&países) <= 3){
-		printf("\nPerdiste\n");
+		printf("\n\033[31mPerdiste\033[0m\n");
 		return 0;
 
 	} else{
-		printf("\nGanaste\n");
+		printf("\n\033[32mGanaste\033[0m\n");
 		return 0;
 	}
 }
