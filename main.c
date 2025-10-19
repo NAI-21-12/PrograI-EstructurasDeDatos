@@ -582,7 +582,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 	
 		} else if(decisión == 3){
             //Si da error la función esta, se repite
-            if(ayudarPaís(&países,numJugador) == 1){
+            if(ayudarPaís(países,numJugador) == 1){
                 turnoJugador(numJugador,jugador,&países,acciones);
             }
 				
@@ -607,7 +607,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		
 		} else if(decisión == 3){
 			//Si da error la función esta, se repite
-            if(ayudarPaís(&países,numJugador) == 1){
+            if(ayudarPaís(países,numJugador) == 1){
                 turnoJugador(numJugador,jugador,&países,acciones);
             }	
 		} else{
@@ -633,7 +633,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		
 		} else if(decisión == 3){
 			//Si da error la función esta, se repite
-            if(ayudarPaís(&países,numJugador) == 1){
+            if(ayudarPaís(países,numJugador) == 1){
                 turnoJugador(numJugador,jugador,&países,acciones);
             }
 				
