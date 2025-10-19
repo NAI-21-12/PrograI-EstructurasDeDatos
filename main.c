@@ -103,10 +103,10 @@ struct país* crearPaís(char* nombre, char* problema1,
  * E: Un struct lista*
  * S: Los países impresos en pantalla
  * R: Lista debe ser diferente de null
- */ 
+ */
 int imprimirPaíses(struct lista* lista, char* jugador1, char* jugador2){
     struct país* actual = lista->inicio;
-   
+
     while (actual->sigt != NULL){
         if(actual -> estado == 0){
             printf("País: %s\t\t\tTodo bien\n",actual->nombre);
@@ -484,10 +484,70 @@ void paísEliminado(struct lista* países){
 }
 
 
+int ayudarPaís(struct lista* países, int numJugador){
+    /*
+    Casos posibles:
+    - país muerto o inactivo                       devuelve 1
+    - que un valor sea 0 y trate de disminuirlo    devuelve 1
+    - opción inválida                              devuelve 1
+    - un caso normal                               devuelve 0
+    */
+    struct país* actual = países->inicio;
+    int decisión;
+    //Busca los jugadores en la lista
+	if(numJugador == 1){
+		while(actual->jugador1 != 1){
+			actual = actual->sigt;
+		}
+
+	} else if(numJugador == 2){
+		while(actual->jugador2 != 1){
+			actual = actual->sigt;
+		}
+	}
+
+    //Caso 1: país muerto o inactivo
+    if(actual->estado == 1 || actual->estado == 0){
+        printf("\033[31mPaís no válido\033[0m\n");
+        return 1;
+    }
+
+    printf("%s ¿Qué tipo de proyecto quiere realizar? 1 o 2.\n");
+
+	scanf("%d", &decisión);
+    if(decisión == 1){
+        if(actual->problema1Valor == 0){
+            printf("El valor del problema 1 ya estaba en 0.\n");
+            return 1;
+        } else{
+            printf("Ha disminuido el valor del problema 1 en un nivel.\n");
+            actual->problema1Valor--;
+            return 0;
+        }
+    } else if(decisión == 2){
+        if(actual->problema2Valor == 0){
+            printf("El valor del problema 2 ya estaba en 0.\n");
+            return 1;
+        } else{
+            printf("Ha disminuido el valor del problema 2 en un nivel.\n");
+            actual->problema2Valor--;
+            return 0;
+        }
+    } else {
+        printf("Esa no es una opción válida.\n");
+        return 1;
+    }
+}
+
+
+
+
 int turnoJugador(int numJugador, char* jugador, struct lista* países, int acciones){
 	struct país* actual = países->inicio;
 	int decisión;
-	
+    //Para ver si sí hizo bien el aporte al país
+	int resultadoAyuda = 0;
+    //Busca los jugadores en la lista
 	if(numJugador == 1){
 		while(actual->jugador1 != 1){
 			actual = actual->sigt;
@@ -521,7 +581,10 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 			actual->jugador2 = 0;
 	
 		} else if(decisión == 3){
-			printf("\033[31mProyectos aún no implementados.\033[0m\n");
+            //Si da error la función esta, se repite
+            if(ayudarPaís(&países,numJugador) == 1){
+                turnoJugador(numJugador,jugador,&países,acciones);
+            }
 				
 		} else{
 			printf("Esa opción no es válida, perdiste tu turno\n");
@@ -543,8 +606,10 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 			printf("Argentina no tiene vecinos sur, perdiste tu tiempo y un turno\n");
 		
 		} else if(decisión == 3){
-			printf("\033[31mProyectos aún no implementados.\033[0m\n");
-				
+			//Si da error la función esta, se repite
+            if(ayudarPaís(&países,numJugador) == 1){
+                turnoJugador(numJugador,jugador,&países,acciones);
+            }	
 		} else{
 			printf("Esa opción no es válida, perdiste tu turno\n");
 		}
@@ -567,7 +632,10 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 			actual->jugador2 = 0;
 		
 		} else if(decisión == 3){
-			printf("\033[31mProyectos aún no implementados.\033[0m\n");
+			//Si da error la función esta, se repite
+            if(ayudarPaís(&países,numJugador) == 1){
+                turnoJugador(numJugador,jugador,&países,acciones);
+            }
 				
 		} else{
 			printf("Esa opción no es válida, perdiste tu turno\n");
@@ -675,11 +743,11 @@ int main(){
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
     activarIniciales(&países);
-    //char* jugador1 = crearJugador(1);
-    //char* jugador2 = crearJugador(2);
+    char* jugador1 = crearJugador(1);
+    char* jugador2 = crearJugador(2);
     //Para pruebas sin introducción comentar esas 2 líneas y descomentar estas
-    char* jugador1 = "Jugador1";
-    char* jugador2 = "Jugador2";
+    //char* jugador1 = "Jugador1";
+    //char* jugador2 = "Jugador2";
     
     int ronda = 1;
     printf("\n");
