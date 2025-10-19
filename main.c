@@ -32,6 +32,13 @@ struct lista{
 };
 
 
+// Pide la confirmación del usuario de que el programa puede seguir
+void tiempoFuera(){
+	printf("\nPresione ENTER para continuar\n");
+	while(getchar() != '\n'){}
+}
+
+
 char* crearJugador(int número){
 	int tamaño = 10;
 	char* nuevoJugador = calloc(tamaño + 1, sizeof(char));
@@ -42,7 +49,7 @@ char* crearJugador(int número){
 	}
 	
 	printf("¡Bienvenido jugador %d!\n%s%d%s", número,
-	       "¿Cuál es tu nombre? (Máximo ", tamaño, " letras sin espacios)\n");
+	       "¿Cuál es tu nombre? (Máximo ", tamaño, " letras)\n");
 	
 	while(scanf("%[^\n]%*c", nuevoJugador) == 0){
 		getchar();
@@ -56,20 +63,17 @@ char* crearJugador(int número){
 	if(decisión == 'y' || decisión == 'Y'){
 		printf("%s\n", "\n¡AQUÍ VA UNA INTRODUCCIÓN AL JUEGO PORQUE ES AURELIO!");
 		
-		printf("\nPresione ENTER para continuar");
-		while(getchar() != '\n'){}
+		tiempoFuera();
 		
 	} else if(decisión == 'n' || decisión == 'N'){
 		printf("\nCool, buena suerte salvando el mundo!\n");
 		
-		printf("\nPresione ENTER para continuar");
-		while(getchar() != '\n'){}
+		tiempoFuera();
 		
 	} else{
 		printf("\nGenial, me salió inteligente. No tengo que explicar nada.\n");
 		
-		printf("\nPresione ENTER para continuar");
-		while(getchar() != '\n'){}
+		tiempoFuera();
 
 	}
 	return nuevoJugador;
@@ -420,49 +424,6 @@ void aumentarProblemas(struct lista* países){
 }
 
 
-/*
-int activarNuevo(struct lista* países){
-    //activa un país que no lo estaba
-    int activado = 0;
-    //Si se repite 20 veces y no se activa ninguno, queda así
-    //Para eso este valor
-    int contador = 0;
-    //Este while es para que sí o sí aumente un valor en alguno
-    while(activado == 0){
-        int paísSalado = (rand() % (23 - 0 + 1)) + 0;
-        struct país* actual = países->inicio;
-        int índice = 0;
-        //si es 1, sube problema1, si es 2, sube problema2
-        int valorASubir = (rand() % (2 - 1 + 1)) + 1;
-        while(índice < 23){
-            if(índice == paísSalado && actual->estado == 0){
-
-                //Para problema1
-                if( valorASubir == 1){
-                    actual->estado = 1;
-                    actual->problema1Valor++;
-                    activado++;
-                    return 0;
-                }
-
-                //Ahora para problema2
-                if( valorASubir == 2){
-                    actual->estado = 0;
-                    actual->problema2Valor++;
-                    activado++;
-                    return 0;
-            }
-        }
-        índice++;
-        actual = actual->sigt;
-        contador++;
-    }
-    if(contador == 20){
-        return 0;
-    }
-    }
-}*/
-
 void paísEliminado(struct lista* países){
     //Pone un país en eliminado
     //Para esto, mejor no borrarlo de la lista para evitar enredos
@@ -473,7 +434,7 @@ void paísEliminado(struct lista* países){
     while(actual->sigt != NULL){
         if(actual->problema1Valor == 3 && actual->problema2Valor == 3){
 			printf("El país %s ha sido eliminado.\n", actual -> nombre);
-			while(getchar() != '\n'){}
+			tiempoFuera();
             actual -> estado = 2;
             actual -> problema1Valor = -1;
             actual -> problema2Valor = -1;
@@ -512,7 +473,7 @@ int ayudarPaís(struct lista* países, int numJugador){
         return 1;
     }
 
-    printf("%s ¿Qué tipo de proyecto quiere realizar? 1 o 2.\n");
+    printf("¿Qué tipo de proyecto quiere realizar? 1 o 2.\n");
 
 	scanf("%d", &decisión);
     if(decisión == 1){
@@ -540,8 +501,6 @@ int ayudarPaís(struct lista* países, int numJugador){
 }
 
 
-
-
 int turnoJugador(int numJugador, char* jugador, struct lista* países, int acciones){
 	struct país* actual = países->inicio;
 	int decisión;
@@ -559,9 +518,9 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 		}
 	}
 
-	printf("%s ¿Qué deseas realizar ahora? (Te quedan %d acciones)\n%s%s%s",
+	printf("%s, ¿Qué deseas realizar ahora? (Te quedan %d acciones)\n%s%s",
 	       jugador, acciones, "1. Moverse al país vecino norte\n",
-	       "2. Moverse al país vecino sur\n", "3. Implementar un proyecto aquí\n");
+	       "2. Moverse al país vecino sur\n3. Implementar un proyecto aquí\n");
 
 	scanf("%d", &decisión);
 	
@@ -587,12 +546,15 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
             resultadoAyuda = ayudarPaís(países,1);
             if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
+                return 0;
             }
+            
         } else if(decisión == 3&& numJugador == 2){
 			//Si da error la función esta, se repite
             resultadoAyuda = ayudarPaís(países,2);
             if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
+                return 0;
             }
 				
 		} else{
@@ -621,12 +583,15 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
             resultadoAyuda = ayudarPaís(países,1);
             if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
+                return 0;
             }
+            
         } else if(decisión == 3&& numJugador == 2){
 			//Si da error la función esta, se repite
             resultadoAyuda = ayudarPaís(países,2);
             if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
+                return 0;
             }
 		} else{
 			printf("Esa opción no es válida, perdiste tu turno\n");
@@ -658,12 +623,14 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
             resultadoAyuda = ayudarPaís(países,1);
             if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
+                return 0;
             }
         } else if(decisión == 3 && numJugador == 2){
 			//Si da error la función esta, se repite
             resultadoAyuda = ayudarPaís(países,2);
             if(resultadoAyuda == 1){
                 turnoJugador(numJugador,jugador,países,acciones);
+                return 0;
             }
 				
 		} else{
@@ -786,7 +753,7 @@ int main(){
 		printf("\033[31mRonda: %d\033[0m\n%s\n", ronda,
 		       "--------------------------------------------------");
 		imprimirPaíses(&países, jugador1, jugador2);
-		while(getchar() != '\n'){}
+		tiempoFuera();
 		turnoJugador(1, jugador1, &países, 4);
 		turnoJugador(2, jugador2, &países, 4);
 		aumentarProblemas(&países);
