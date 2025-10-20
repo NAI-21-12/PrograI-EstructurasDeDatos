@@ -147,7 +147,7 @@ int imprimirPaíses(struct lista* lista, char* jugador1, char* jugador2){
             printf("Problema 1: %s\t\t\tNivel: %d\n",
                    actual->problema1, actual->problema1Valor);
                    
-            printf("Problema 2: %s\t\t\tNivel: %d\n",
+            printf("Problema 2: %s\tNivel: %d\n",
                    actual->problema2, actual->problema2Valor);
                         
             if(actual->jugador1 == 1){
@@ -203,7 +203,7 @@ int imprimirPaíses(struct lista* lista, char* jugador1, char* jugador2){
             printf("Problema 1: %s\t\t\tNivel: %d\n",
                    actual->problema1, actual->problema1Valor);
                    
-            printf("Problema 2: %s\t\tNivel: %d\n",
+            printf("Problema 2: %s\tNivel: %d\n",
                    actual->problema2, actual->problema2Valor);
                    
             if(actual->jugador1 == 1){
@@ -256,7 +256,7 @@ void crearListaPaíses(struct lista* países){
     insertarFinal(países,"El Salvador","Corrupción",0,"Desigualdad Económica",0,0,0,0);
     insertarFinal(países,"Honduras","Corrupción",0,"Desigualdad Económica",0,0,0,0);
     insertarFinal(países,"Nicaragua","Corrupción",0,"Desigualdad Económica",0,0,0,0);
-    insertarFinal(países,"Costa Rica","Corrupción",0,"Desigualdad Económica",0,0,1,1);
+    insertarFinal(países,"Costa Rica","Corrupción",0,"Desigualdad Económica",0,0,0,0);
     insertarFinal(países,"Panamá","Corrupción",0,"Desigualdad Económica",0,0,0,0);
     insertarFinal(países,"Colombia","Corrupción",0,"Desigualdad Económica",0,0,0,0);
     insertarFinal(países,"Venezuela","Corrupción",0,"Desigualdad Económica",0,0,0,0);
@@ -269,6 +269,30 @@ void crearListaPaíses(struct lista* países){
     insertarFinal(países,"Uruguay","Corrupción",0,"Desigualdad Económica",0,0,0,0);
     insertarFinal(países,"Chile","Corrupción",0,"Desigualdad Económica",0,0,0,0);
     insertarFinal(países,"Argentina","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    
+    //Coloca a los jugadores de forma aleatoria
+    int jugador1 = (rand() % 24);
+    int jugador2 = (rand() % 24);
+    int i = 0;
+    struct país* act = países->inicio;
+    while(act -> sigt != NULL){
+		if(jugador1 == i){
+			act -> jugador1 = 1;
+		}
+		if(jugador2 == i){
+			act -> jugador2 = 1;
+		}
+		act = act -> sigt;
+		i++;
+		
+	}
+	//Caso final
+	if(jugador1 == i){
+		act -> jugador1 = 1;
+	}
+	if(jugador2 == i){
+		act -> jugador2 = 1;
+	}
 }
 
 
@@ -323,16 +347,21 @@ void activarIniciales(struct lista* países){
 }
 
 
-void afectar(struct país* afectado, int problema){
+void afectar(struct país* afectado, int problema, int bandera){
+	//Bandera de emergencia para evitar enciclamiento
+	if(bandera == 0){
+		return;
+	}
+	bandera--;
 //Caso de México--------------------------------------------------------
 	if(afectado->nombre == "México"){
 		if(problema == 1){
 			if(afectado -> estado == 2){
 				printf("La explosión de %s en las ruinas de %s%s",
-					afectado->problema1, afectado->nombre,
-					" se expadió sin problemas a sus países vecinos\n");
+					   afectado->problema1, afectado->nombre,
+					   " se expadió sin problemas a su país vecino\n");
 			       
-				afectar(afectado->sigt, problema);
+				afectar(afectado->sigt, problema, bandera);
 			}
 
 			if(afectado -> problema1Valor == 3){
@@ -340,7 +369,7 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema1, afectado -> nombre,
 					" vecinos adoptaran prácticas similares\n");
 			  
-				afectar(afectado->sigt, problema);
+				afectar(afectado->sigt, problema, bandera);
 
 			} else{
 				printf("El nivel de %s en %s ha aumentado\n",
@@ -348,7 +377,7 @@ void afectar(struct país* afectado, int problema){
 			       
 				afectado -> problema1Valor++;
 				if(afectado -> estado == 0){
-					afectado -> estado == 1;
+					afectado -> estado = 1;
 				}
 			}
 
@@ -358,7 +387,7 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema2, afectado->nombre,
 					" se expadió sin problemas a sus países vecinos\n");
 			       
-				afectar(afectado->sigt, problema);
+				afectar(afectado->sigt, problema, bandera);
 			}
 
 			if(afectado -> problema1Valor == 3){
@@ -366,7 +395,7 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema2, afectado -> nombre,
 					" vecinos adoptaran prácticas similares\n");
 			  
-				afectar(afectado->sigt, problema);
+				afectar(afectado->sigt, problema, bandera);
 
 			} else{
 				printf("El nivel de %s en %s ha aumentado\n",
@@ -374,7 +403,7 @@ void afectar(struct país* afectado, int problema){
 			       
 				afectado -> problema2Valor++;
 				if(afectado -> estado == 0){
-					afectado -> estado == 1;
+					afectado -> estado = 1;
 				}
 			}
 		}
@@ -387,7 +416,7 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema1, afectado->nombre,
 					" se expadió sin problemas a sus países vecinos\n");
 			       
-				afectar(afectado->ant, problema);
+				afectar(afectado->ant, problema, bandera);
 			}
 
 			if(afectado -> problema1Valor == 3){
@@ -395,7 +424,7 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema1, afectado -> nombre,
 					" vecinos adoptaran prácticas similares\n");
 			  
-				afectar(afectado->ant, problema);
+				afectar(afectado->ant, problema, bandera);
 
 			} else{
 				printf("El nivel de %s en %s ha aumentado\n",
@@ -403,7 +432,7 @@ void afectar(struct país* afectado, int problema){
 			       
 				afectado -> problema1Valor++;
 				if(afectado -> estado == 0){
-					afectado -> estado == 1;
+					afectado -> estado = 1;
 				}
 			}
 
@@ -413,7 +442,7 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema2, afectado->nombre,
 					" se expadió sin problemas a sus países vecinos\n");
 			       
-				afectar(afectado->ant, problema);
+				afectar(afectado->ant, problema, bandera);
 			}
 
 			if(afectado -> problema1Valor == 3){
@@ -421,7 +450,7 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema2, afectado -> nombre,
 					" vecinos adoptaran prácticas similares\n");
 			  
-				afectar(afectado->ant, problema);
+				afectar(afectado->ant, problema, bandera);
 
 			} else{
 				printf("El nivel de %s en %s ha aumentado\n",
@@ -429,7 +458,7 @@ void afectar(struct país* afectado, int problema){
 			       
 				afectado -> problema2Valor++;
 				if(afectado -> estado == 0){
-					afectado -> estado == 1;
+					afectado -> estado = 1;
 				}
 			}
 		}
@@ -442,8 +471,8 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema1, afectado->nombre,
 					" se expadió sin problemas a sus países vecinos\n");
 			       
-				afectar(afectado->ant, problema);
-				afectar(afectado->sigt, problema);
+				afectar(afectado->ant, problema, bandera);
+				afectar(afectado->sigt, problema, bandera);
 			}
 
 			if(afectado -> problema1Valor == 3){
@@ -451,8 +480,8 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema1, afectado -> nombre,
 					" vecinos adoptaran prácticas similares\n");
 			  
-				afectar(afectado->ant, problema);
-				afectar(afectado->sigt, problema);
+				afectar(afectado->ant, problema, bandera);
+				afectar(afectado->sigt, problema, bandera);
 
 			} else{
 				printf("El nivel de %s en %s ha aumentado\n",
@@ -460,7 +489,7 @@ void afectar(struct país* afectado, int problema){
 			       
 				afectado -> problema1Valor++;
 				if(afectado -> estado == 0){
-					afectado -> estado == 1;
+					afectado -> estado = 1;
 				}
 			}
 
@@ -470,8 +499,8 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema2, afectado->nombre,
 					" se expadió sin problemas a sus países vecinos\n");
 			       
-				afectar(afectado->ant, problema);
-				afectar(afectado->sigt, problema);
+				afectar(afectado->ant, problema, bandera);
+				afectar(afectado->sigt, problema, bandera);
 			}
 
 			if(afectado -> problema1Valor == 3){
@@ -479,8 +508,8 @@ void afectar(struct país* afectado, int problema){
 					afectado->problema2, afectado -> nombre,
 					" vecinos adoptaran prácticas similares\n");
 			  
-				afectar(afectado->ant, problema);
-				afectar(afectado->sigt, problema);
+				afectar(afectado->ant, problema, bandera);
+				afectar(afectado->sigt, problema, bandera);
 
 			} else{
 				printf("El nivel de %s en %s ha aumentado\n",
@@ -488,7 +517,7 @@ void afectar(struct país* afectado, int problema){
 			       
 				afectado -> problema2Valor++;
 				if(afectado -> estado == 0){
-					afectado -> estado == 1;
+					afectado -> estado = 1;
 				}
 			}
 		}
@@ -506,7 +535,7 @@ void asignarProblemas(struct lista* países){
 			afectado = afectado->sigt;
 			paísSalado--;
 		}
-		afectar(afectado, problema);
+		afectar(afectado, problema, 2);
 		tiempoFuera();
 		i--;
 	}
@@ -760,7 +789,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
             }
 				
 		} else{
-			printf("Esa opción no es válida, perdiste tu turno\n");
+			printf("Esa opción no es válida, perdiste tu turno\n\n");
 		}
 			
 	} else if (actual->nombre == "Argentina"){
@@ -796,7 +825,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
                 return 0;
             }
 		} else{
-			printf("Esa opción no es válida, perdiste tu turno\n");
+			printf("Esa opción no es válida, perdiste tu turno\n\n");
 		}
 			
 	} else{
@@ -836,7 +865,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
             }
 				
 		} else{
-			printf("Esa opción no es válida, perdiste tu turno\n");
+			printf("Esa opción no es válida, perdiste tu turno\n\n");
 			getchar();
 		}
 	}
@@ -967,8 +996,8 @@ int main(){
 		tiempoFuera();
 		turnoJugador(2, jugador2, &países, 4);
 
-		//asignarProblemas(&países);
-		aumentarProblemas(&países);
+		asignarProblemas(&países);
+		//aumentarProblemas(&países);
 		paísEliminado(&países);
 		ronda++;
 	}
