@@ -684,6 +684,59 @@ void paísEliminado(struct lista* países){
 }
 
 
+void imprimirProyecto(int num, int problema){
+	if(problema == 1){
+		if(num == 0){
+			printf("Crearemos una plataforma en la que cualquier ciudadano%s",
+			       " pueda ver a donde van destinados los recursos públicos\n");
+			
+		} else if(num == 1){
+			printf("Formaremos alianzas que promuevan el anarquismo%s%s",
+			       " para catalizar estos crímenes en una revolución ",
+			       "anarquista que mejore el estado de la región");
+			
+		} else if(num == 2){
+			printf("Educaremos a los niños de las escuelas para que no%s",
+			       " se dejen manipular por las élites\n");
+			
+		} else if(num == 3){
+			printf("Utilizaremos inteligencia artifical para detectar%s",
+			       " irregularidades durante auditorias y rendiciones de cuentas\n");
+			
+		} else{
+			printf("Crearemos una organización para entregar denuncias%s",
+			       " anónimas ante las autoridades que no perjudiquen a las víctimas\n");
+			
+		}
+		
+	} else{
+		if(num == 0){
+			printf("Se procederá a construir una escuela en una zona pobre del país\n");
+			
+		} else if(num == 1){
+			printf("Vamos a aprovechar los recursos naturales y la agricultura%s%s",
+			       " pues, podría ayudar a posicionar a la ",
+			       "región como una potencia en temas de alimentación\n");
+			
+		} else if(num == 2){
+			printf("Ahora crearemos un sistema de apoyo entre los%s%s",
+			       " países latinoamericanos, para no tener que ",
+			       "depender de las superpotencias\n");
+			
+		} else if(num == 3){
+			printf("Vamos a crear bancos de alimentos y huertas%s",
+			       " comunitarias para los pueblos más vulnerables.\n");
+			
+		} else{
+			printf("Intentaremos fundar laboratorios para el %s",
+			       "desarrollo tecnológico en el país.\n");
+			
+		}
+		
+	}
+}
+
+
 int ayudarPaís(struct lista* países, int numJugador){
     /*
     Casos posibles:
@@ -722,10 +775,11 @@ int ayudarPaís(struct lista* países, int numJugador){
 	printf("\n");
     if(decisión == 1){
         if(actual->problema1Valor == 0){
-            printf("El valor del problema 1 ya estaba en 0.\n\n");
+            printf("El valor del problema ya estaba en 0.\n\n");
             return 1;
         } else{
-            printf("Ha disminuido el valor del problema 1 en un nivel.\n\n");
+			imprimirProyecto((rand() % 5), decisión);
+            printf("Ha disminuido el valor del problema en un nivel.\n\n");
             actual->problema1Valor--;
             
             if(actual->problema1Valor==0 && actual->problema2Valor==0){
@@ -736,9 +790,10 @@ int ayudarPaís(struct lista* países, int numJugador){
  
     } else if(decisión == 2){
         if(actual->problema2Valor == 0){
-            printf("El valor del problema 2 ya estaba en 0.\n\n");
+            printf("El valor del problema ya estaba en 0.\n\n");
             return 1;
         } else{
+			imprimirProyecto((rand() % 5), decisión);
             printf("Ha disminuido el valor del problema 2 en un nivel.\n\n");
             actual->problema2Valor--;
             
@@ -753,7 +808,6 @@ int ayudarPaís(struct lista* países, int numJugador){
         return 1;
     }
 }
-
 
 int turnoJugador(int numJugador, char* jugador, struct lista* países, int acciones){
 	struct país* actual = países->inicio;
