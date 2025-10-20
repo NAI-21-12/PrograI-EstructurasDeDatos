@@ -100,24 +100,7 @@ char* crearJugador(int número){
 	nuevoJugador[tamaño] = '\0';
 	printf("\nUn placer en conocerte %s\n", nuevoJugador);
 	
-	printf("%s\n", "¿Te informo de la situación actual (y/n)? (Leer las reglas)");
-	scanf("%[^\n]%*c", &decisión);
-	if(decisión == 'y' || decisión == 'Y'){
-		printf("%s\n", "\n¡AQUÍ VA UNA INTRODUCCIÓN AL JUEGO PORQUE ES AURELIO!");
-		
-		tiempoFuera();
-		
-	} else if(decisión == 'n' || decisión == 'N'){
-		printf("\nCool, buena suerte salvando el mundo!\n");
-		
-		tiempoFuera();
-		
-	} else{
-		printf("\nGenial, me salió inteligente. No tengo que explicar nada.\n");
-		
-		tiempoFuera();
 
-	}
 	return nuevoJugador;
 }
 
@@ -1009,6 +992,14 @@ void historia(){
 	tiempoFuera();
 	printf("Un anarquista y un miembro de la ONU\n");
 	printf("se reúnen para tratar de erradicar los problemas en la región.\n");
+	tiempoFuera();
+	printf("Ambos jugadores iniciarán en un país aleatorio\n");
+	printf("donde tendrán 3 opciones, moverse al norte, sur, o ejecutar un proyecto.\n");
+	tiempoFuera();
+	printf("Los países tienen distintos niveles de problemas, de 0 a 3.\n");
+	printf("Si ambos problemas en un país llegan a 3, este queda inactivo.\n");
+	printf("Tu misión es tratar que un problema en todos los países llegue a 0.\n");
+	tiempoFuera();
 }
 
 
@@ -1032,6 +1023,24 @@ int main(){
     activarIniciales(&países);
     char* jugador1 = crearJugador(1);
     char* jugador2 = crearJugador(2);
+	char decisión  = '\0';
+	printf("%s\n", "¿Te informo de la situación actual (y/n)? (Leer las reglas)");
+	scanf("%[^\n]%*c", &decisión);
+	if(decisión == 'y' || decisión == 'Y'){
+		
+		historia();
+		tiempoFuera();
+		
+	} else if(decisión == 'n' || decisión == 'N'){
+		printf("\nCool, buena suerte salvando el mundo!\n");
+
+		
+	} else{
+		printf("\nGenial, me salió inteligente. No tengo que explicar nada.\n");
+		
+		tiempoFuera();
+
+	}
     //Para pruebas sin introducción comentar esas 2 líneas y descomentar estas
     //char* jugador1 = "Jugador1";
     //char* jugador2 = "Jugador2";
