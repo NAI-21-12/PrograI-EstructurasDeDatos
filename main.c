@@ -6,6 +6,48 @@
 #include <string.h>
 
 
+
+typedef struct nodo{
+	int clave;
+	char *valores;
+	struct nodo *siguiente;
+} nodoHash;
+
+typedef struct{
+	int tamaño;
+	nodoHash **valores;
+} tablaHash;
+
+int funciónHash(int clave, int tamaño){
+	return clave%tamaño;
+}
+
+tablaHash *crearTabla(int tamaño){
+	tablaHash *nuevaTabla = (tablaHash *)malloc(sizeof(tablaHash));
+	nuevaTabla->tamaño = tamaño;
+
+	nuevaTabla->valores = (nodoHash **)calloc(tamaño,sizeof(nodoHash *));
+	return nuevaTabla;
+}
+
+
+void insertarTabla(tablaHash *tabla,int clave, char* valor){
+	int índice = funciónHash(clave, tabla->tamaño);
+
+	nodoHash *nuevoNodo = (nodoHash *)malloc(sizeof(nodoHash));
+
+	if (nuevoNodo == NULL){
+		printf("Error\n");
+		return;
+	}
+	nuevoNodo->clave = clave;
+	//copia el string
+	nuevoNodo->valores = strdup(valor);
+
+	nuevoNodo -> siguiente = tabla->valores[índice];
+	tabla->valores[índice] = nuevoNodo;
+}
+
 struct país{
     struct país* sigt;
     struct país* ant;
@@ -359,7 +401,7 @@ void afectar(struct país* afectado, int problema, int bandera){
 			if(afectado -> estado == 2){
 				printf("La explosión de %s en las ruinas de %s%s",
 					   afectado->problema1, afectado->nombre,
-					   " se expadió sin problemas a su país vecino\n");
+					   " se expandió sin problemas a su país vecino\n");
 			       
 				afectar(afectado->sigt, problema, bandera);
 			}
@@ -385,7 +427,7 @@ void afectar(struct país* afectado, int problema, int bandera){
 			if(afectado -> estado == 2){
 				printf("La explosión de %s en las ruinas de %s%s",
 					afectado->problema2, afectado->nombre,
-					" se expadió sin problemas a sus países vecinos\n");
+					" se expandió sin problemas a sus países vecinos\n");
 			       
 				afectar(afectado->sigt, problema, bandera);
 			}
@@ -414,7 +456,7 @@ void afectar(struct país* afectado, int problema, int bandera){
 			if(afectado -> estado == 2){
 				printf("La explosión de %s en las ruinas de %s%s",
 					afectado->problema1, afectado->nombre,
-					" se expadió sin problemas a sus países vecinos\n");
+					" se expandió sin problemas a sus países vecinos\n");
 			       
 				afectar(afectado->ant, problema, bandera);
 			}
@@ -440,7 +482,7 @@ void afectar(struct país* afectado, int problema, int bandera){
 			if(afectado -> estado == 2){
 				printf("La explosión de %s en las ruinas de %s%s",
 					afectado->problema2, afectado->nombre,
-					" se expadió sin problemas a sus países vecinos\n");
+					" se expandió sin problemas a sus países vecinos\n");
 			       
 				afectar(afectado->ant, problema, bandera);
 			}
@@ -469,7 +511,7 @@ void afectar(struct país* afectado, int problema, int bandera){
 			if(afectado -> estado == 2){
 				printf("La explosión de %s en las ruinas de %s%s",
 					afectado->problema1, afectado->nombre,
-					" se expadió sin problemas a sus países vecinos\n");
+					" se expandió sin problemas a sus países vecinos\n");
 			       
 				afectar(afectado->ant, problema, bandera);
 				afectar(afectado->sigt, problema, bandera);
@@ -497,7 +539,7 @@ void afectar(struct país* afectado, int problema, int bandera){
 			if(afectado -> estado == 2){
 				printf("La explosión de %s en las ruinas de %s%s",
 					afectado->problema2, afectado->nombre,
-					" se expadió sin problemas a sus países vecinos\n");
+					" se expandió sin problemas a sus países vecinos\n");
 			       
 				afectar(afectado->ant, problema, bandera);
 				afectar(afectado->sigt, problema, bandera);
@@ -617,7 +659,6 @@ void aumentarProblemas(struct lista* países){
                             }
                         }
                     }
-
                 }
 
 				// Parte que puede funcionar como activarNuevo
@@ -954,6 +995,21 @@ int contarProblemas2(struct lista* países){
 	}
 	return problemas;
 }
+
+
+
+void historia(){
+	printf("Latinoamérica, 2025.\n");
+	tiempoFuera();
+	printf("En medio de una crisis inminente, donde los países\n");
+	printf("tienen pocas esperanzas de mantenerse a flote,\n");
+	tiempoFuera();
+	printf("Llegan dos expertos, capaces de solventar esta crisis...\n");
+	printf("si actúan rápidaa y sabiamente.\n");
+}
+
+
+
 
 
 //Función main que corre el programa
