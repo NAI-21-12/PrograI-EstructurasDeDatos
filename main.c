@@ -1005,7 +1005,10 @@ void historia(){
 	printf("tienen pocas esperanzas de mantenerse a flote,\n");
 	tiempoFuera();
 	printf("Llegan dos expertos, capaces de solventar esta crisis...\n");
-	printf("si actúan rápidaa y sabiamente.\n");
+	printf("si actúan rápida y sabiamente.\n");
+	tiempoFuera();
+	printf("Un anarquista y un miembro de la ONU\n");
+	printf("se reúnen para tratar de erradicar los problemas en la región.\n");
 }
 
 
