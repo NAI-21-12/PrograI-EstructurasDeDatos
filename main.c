@@ -971,11 +971,11 @@ int main(){
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
     activarIniciales(&países);
-    //char* jugador1 = crearJugador(1);
-    //char* jugador2 = crearJugador(2);
+    char* jugador1 = crearJugador(1);
+    char* jugador2 = crearJugador(2);
     //Para pruebas sin introducción comentar esas 2 líneas y descomentar estas
-    char* jugador1 = "Jugador1";
-    char* jugador2 = "Jugador2";
+    //char* jugador1 = "Jugador1";
+    //char* jugador2 = "Jugador2";
     
     int ronda = 1;
     printf("\n");
@@ -986,16 +986,20 @@ int main(){
 		printf("\033[31mRonda: %d\033[0m\n%s\n", ronda,
 		       "--------------------------------------------------");
 		imprimirPaíses(&países, jugador1, jugador2);
-		printf("%s", jugador1);
+		printf("\033[33m%s\033[0m", jugador1);
 		tiempoFuera();
 		turnoJugador(1, jugador1, &países, 4);
 
 		getchar();
+		tiempoFuera();
 		imprimirPaíses(&países, jugador1, jugador2);
-		printf("%s", jugador2);
+		printf("\033[33m%s\033[0m", jugador2);
 		tiempoFuera();
 		turnoJugador(2, jugador2, &países, 4);
-
+		
+		getchar();
+		tiempoFuera();
+		imprimirPaíses(&países, jugador1, jugador2);
 		asignarProblemas(&países);
 		//aumentarProblemas(&países);
 		paísEliminado(&países);
