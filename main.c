@@ -144,10 +144,10 @@ int imprimirPaíses(struct lista* lista, char* jugador1, char* jugador2){
             
         }else {
             printf("País: %s\n", actual->nombre);
-            printf("Problema 1: %s\t\tNivel: %d\n",
+            printf("Problema 1: %s\t\t\tNivel: %d\n",
                    actual->problema1, actual->problema1Valor);
                    
-            printf("Problema 2: %s\t\tNivel: %d\n",
+            printf("Problema 2: %s\t\t\tNivel: %d\n",
                    actual->problema2, actual->problema2Valor);
                         
             if(actual->jugador1 == 1){
@@ -200,7 +200,7 @@ int imprimirPaíses(struct lista* lista, char* jugador1, char* jugador2){
             
     }else {
             printf("País: %s\n", actual->nombre);
-            printf("Problema 1: %s\t\tNivel: %d\n",
+            printf("Problema 1: %s\t\t\tNivel: %d\n",
                    actual->problema1, actual->problema1Valor);
                    
             printf("Problema 2: %s\t\tNivel: %d\n",
@@ -245,30 +245,30 @@ int insertarFinal(struct lista* lista, char* nombre, char* problema1,
 
 void crearListaPaíses(struct lista* países){
     //ESTOS SON PROBLEMAS DE EJEMPLO, LA IDEA ES CAMBIARLOS DESPUÉS
-    insertarFinal(países,"México","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Cuba","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Guatemala","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Belice","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Jamaica","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Haití","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"República Dominicana","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Puerto Rico","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"El Salvador","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Honduras","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Nicaragua","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Costa Rica","Corrupción",0,"Muerte",0,0,1,1);
-    insertarFinal(países,"Panamá","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Colombia","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Venezuela","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Guyanas","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Ecuador","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Perú","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Brasil","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Bolivia","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Paraguay","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Uruguay","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Chile","Corrupción",0,"Muerte",0,0,0,0);
-    insertarFinal(países,"Argentina","Corrupción",0,"Muerte",0,0,0,0);
+    insertarFinal(países,"México","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Cuba","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Guatemala","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Belice","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Jamaica","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Haití","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"República Dominicana","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Puerto Rico","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"El Salvador","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Honduras","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Nicaragua","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Costa Rica","Corrupción",0,"Desigualdad Económica",0,0,1,1);
+    insertarFinal(países,"Panamá","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Colombia","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Venezuela","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Guyanas","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Ecuador","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Perú","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Brasil","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Bolivia","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Paraguay","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Uruguay","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Chile","Corrupción",0,"Desigualdad Económica",0,0,0,0);
+    insertarFinal(países,"Argentina","Corrupción",0,"Desigualdad Económica",0,0,0,0);
 }
 
 
@@ -323,12 +323,197 @@ void activarIniciales(struct lista* países){
 }
 
 
-/* IDEA
- * Ponerle un parámetro extra a esta función con el paísSalado desde fuera y hacerla
- * tipo recursiva para no tener 100 ifs y para poder extenderla todo lo
- * que haga falta hacia los lados con recursividad y un puntero al
- * vecino que haya que infectar
- */
+void afectar(struct país* afectado, int problema){
+//Caso de México--------------------------------------------------------
+	if(afectado->nombre == "México"){
+		if(problema == 1){
+			if(afectado -> estado == 2){
+				printf("La explosión de %s en las ruinas de %s%s",
+					afectado->problema1, afectado->nombre,
+					" se expadió sin problemas a sus países vecinos\n");
+			       
+				afectar(afectado->sigt, problema);
+			}
+
+			if(afectado -> problema1Valor == 3){
+				printf("El nivel de %s tan alto en %s hizo que sus países%s",
+					afectado->problema1, afectado -> nombre,
+					" vecinos adoptaran prácticas similares\n");
+			  
+				afectar(afectado->sigt, problema);
+
+			} else{
+				printf("El nivel de %s en %s ha aumentado\n",
+					afectado->problema1, afectado -> nombre);
+			       
+				afectado -> problema1Valor++;
+				if(afectado -> estado == 0){
+					afectado -> estado == 1;
+				}
+			}
+
+		} else if(problema == 2){
+			if(afectado -> estado == 2){
+				printf("La explosión de %s en las ruinas de %s%s",
+					afectado->problema2, afectado->nombre,
+					" se expadió sin problemas a sus países vecinos\n");
+			       
+				afectar(afectado->sigt, problema);
+			}
+
+			if(afectado -> problema1Valor == 3){
+				printf("El nivel de %s tan alto en %s hizo que sus países%s",
+					afectado->problema2, afectado -> nombre,
+					" vecinos adoptaran prácticas similares\n");
+			  
+				afectar(afectado->sigt, problema);
+
+			} else{
+				printf("El nivel de %s en %s ha aumentado\n",
+					afectado->problema2, afectado -> nombre);
+			       
+				afectado -> problema2Valor++;
+				if(afectado -> estado == 0){
+					afectado -> estado == 1;
+				}
+			}
+		}
+
+// Caso de Argentina----------------------------------------------------
+	} else if(afectado->nombre == "Argentina"){
+		if(problema == 1){
+			if(afectado -> estado == 2){
+				printf("La explosión de %s en las ruinas de %s%s",
+					afectado->problema1, afectado->nombre,
+					" se expadió sin problemas a sus países vecinos\n");
+			       
+				afectar(afectado->ant, problema);
+			}
+
+			if(afectado -> problema1Valor == 3){
+				printf("El nivel de %s tan alto en %s hizo que sus países%s",
+					afectado->problema1, afectado -> nombre,
+					" vecinos adoptaran prácticas similares\n");
+			  
+				afectar(afectado->ant, problema);
+
+			} else{
+				printf("El nivel de %s en %s ha aumentado\n",
+					afectado->problema1, afectado -> nombre);
+			       
+				afectado -> problema1Valor++;
+				if(afectado -> estado == 0){
+					afectado -> estado == 1;
+				}
+			}
+
+		} else if(problema == 2){
+			if(afectado -> estado == 2){
+				printf("La explosión de %s en las ruinas de %s%s",
+					afectado->problema2, afectado->nombre,
+					" se expadió sin problemas a sus países vecinos\n");
+			       
+				afectar(afectado->ant, problema);
+			}
+
+			if(afectado -> problema1Valor == 3){
+				printf("El nivel de %s tan alto en %s hizo que sus países%s",
+					afectado->problema2, afectado -> nombre,
+					" vecinos adoptaran prácticas similares\n");
+			  
+				afectar(afectado->ant, problema);
+
+			} else{
+				printf("El nivel de %s en %s ha aumentado\n",
+					afectado->problema2, afectado -> nombre);
+			       
+				afectado -> problema2Valor++;
+				if(afectado -> estado == 0){
+					afectado -> estado == 1;
+				}
+			}
+		}
+
+// Caso normal----------------------------------------------------------
+	} else{
+		if(problema == 1){
+			if(afectado -> estado == 2){
+				printf("La explosión de %s en las ruinas de %s%s",
+					afectado->problema1, afectado->nombre,
+					" se expadió sin problemas a sus países vecinos\n");
+			       
+				afectar(afectado->ant, problema);
+				afectar(afectado->sigt, problema);
+			}
+
+			if(afectado -> problema1Valor == 3){
+				printf("El nivel de %s tan alto en %s hizo que sus países%s",
+					afectado->problema1, afectado -> nombre,
+					" vecinos adoptaran prácticas similares\n");
+			  
+				afectar(afectado->ant, problema);
+				afectar(afectado->sigt, problema);
+
+			} else{
+				printf("El nivel de %s en %s ha aumentado\n",
+					afectado->problema1, afectado -> nombre);
+			       
+				afectado -> problema1Valor++;
+				if(afectado -> estado == 0){
+					afectado -> estado == 1;
+				}
+			}
+
+		} else if(problema == 2){
+			if(afectado -> estado == 2){
+				printf("La explosión de %s en las ruinas de %s%s",
+					afectado->problema2, afectado->nombre,
+					" se expadió sin problemas a sus países vecinos\n");
+			       
+				afectar(afectado->ant, problema);
+				afectar(afectado->sigt, problema);
+			}
+
+			if(afectado -> problema1Valor == 3){
+				printf("El nivel de %s tan alto en %s hizo que sus países%s",
+					afectado->problema2, afectado -> nombre,
+					" vecinos adoptaran prácticas similares\n");
+			  
+				afectar(afectado->ant, problema);
+				afectar(afectado->sigt, problema);
+
+			} else{
+				printf("El nivel de %s en %s ha aumentado\n",
+					afectado->problema2, afectado -> nombre);
+			       
+				afectado -> problema2Valor++;
+				if(afectado -> estado == 0){
+					afectado -> estado == 1;
+				}
+			}
+		}
+	}
+}
+
+
+void asignarProblemas(struct lista* países){
+	int i = 3;
+	while(i > 0){
+		int paísSalado = (rand() % 24);
+		int problema = (rand() % 2) + 1;
+		struct país* afectado = países->inicio;
+		while(paísSalado != 0){
+			afectado = afectado->sigt;
+			paísSalado--;
+		}
+		afectar(afectado, problema);
+		tiempoFuera();
+		i--;
+	}
+}
+
+
+/*
 void aumentarProblemas(struct lista* países){
     //esto aumenta los problemas en un país aleatorio
     int aumentado = 0;
@@ -422,7 +607,7 @@ void aumentarProblemas(struct lista* países){
         }
     }
 }
-
+*/
 
 void paísEliminado(struct lista* países){
     //Pone un país en eliminado
@@ -434,6 +619,7 @@ void paísEliminado(struct lista* países){
     while(actual->sigt != NULL){
         if(actual->problema1Valor == 3 && actual->problema2Valor == 3){
 			printf("El país %s ha sido eliminado.\n", actual -> nombre);
+			printf("\a");
 			tiempoFuera();
             actual -> estado = 2;
             actual -> problema1Valor = -1;
@@ -468,32 +654,47 @@ int ayudarPaís(struct lista* países, int numJugador){
 	}
 
     //Caso 1: país muerto o inactivo
-    if(actual->estado == 2 || actual->estado == 0){
-        printf("\033[31mPaís no válido\033[0m\n");
+    if(actual->estado == 2){
+        printf("\033[31mEl país ya no puede ser ayudado.\033[0m\n");
+        return 1;
+ 
+    } else if(actual->estado == 0){
+        printf("El país no necesita ayuda ahora mismo.\n");
         return 1;
     }
 
     printf("¿Qué tipo de proyecto quiere realizar? 1 o 2.\n");
 
 	scanf("%d", &decisión);
+	printf("\n");
     if(decisión == 1){
         if(actual->problema1Valor == 0){
-            printf("El valor del problema 1 ya estaba en 0.\n");
+            printf("El valor del problema 1 ya estaba en 0.\n\n");
             return 1;
         } else{
-            printf("Ha disminuido el valor del problema 1 en un nivel.\n");
+            printf("Ha disminuido el valor del problema 1 en un nivel.\n\n");
             actual->problema1Valor--;
+            
+            if(actual->problema1Valor==0 && actual->problema2Valor==0){
+				actual -> estado = 0;
+			}
             return 0;
         }
+ 
     } else if(decisión == 2){
         if(actual->problema2Valor == 0){
-            printf("El valor del problema 2 ya estaba en 0.\n");
+            printf("El valor del problema 2 ya estaba en 0.\n\n");
             return 1;
         } else{
-            printf("Ha disminuido el valor del problema 2 en un nivel.\n");
+            printf("Ha disminuido el valor del problema 2 en un nivel.\n\n");
             actual->problema2Valor--;
+            
+            if(actual->problema1Valor==0 && actual->problema2Valor==0){
+				actual -> estado = 0;
+			}
             return 0;
         }
+
     } else {
         printf("Esa no es una opción válida.\n");
         return 1;
@@ -523,6 +724,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 	       "2. Moverse al país vecino sur\n3. Implementar un proyecto aquí\n");
 
 	scanf("%d", &decisión);
+	printf("\n");
 	
 	if (actual->nombre == "México"){
 		if(decisión == 1 && numJugador == 1){
@@ -635,6 +837,7 @@ int turnoJugador(int numJugador, char* jugador, struct lista* países, int accio
 				
 		} else{
 			printf("Esa opción no es válida, perdiste tu turno\n");
+			getchar();
 		}
 	}
 		
@@ -739,23 +942,32 @@ int main(){
     struct lista países = {NULL,NULL};
     crearListaPaíses(&países);
     activarIniciales(&países);
-    char* jugador1 = crearJugador(1);
-    char* jugador2 = crearJugador(2);
+    //char* jugador1 = crearJugador(1);
+    //char* jugador2 = crearJugador(2);
     //Para pruebas sin introducción comentar esas 2 líneas y descomentar estas
-    //char* jugador1 = "Jugador1";
-    //char* jugador2 = "Jugador2";
+    char* jugador1 = "Jugador1";
+    char* jugador2 = "Jugador2";
     
     int ronda = 1;
     printf("\n");
     while(contarVivos(&países) > 3 && contarProblemas1(&países) != 0
           && contarProblemas2(&países) != 0){
 
+		system("clear");
 		printf("\033[31mRonda: %d\033[0m\n%s\n", ronda,
 		       "--------------------------------------------------");
 		imprimirPaíses(&países, jugador1, jugador2);
+		printf("%s", jugador1);
 		tiempoFuera();
 		turnoJugador(1, jugador1, &países, 4);
+
+		getchar();
+		imprimirPaíses(&países, jugador1, jugador2);
+		printf("%s", jugador2);
+		tiempoFuera();
 		turnoJugador(2, jugador2, &países, 4);
+
+		//asignarProblemas(&países);
 		aumentarProblemas(&países);
 		paísEliminado(&países);
 		ronda++;
